@@ -2,31 +2,31 @@
 An .NET object to work with the date time ranges.
 
 public string ToString():
-DTR1: [01/01/2019 00:00:00, 31/01/2019 23:59:59], duration: 2678399 second(s)
-DTR2: ]01/01/2019 00:00:00, 31/01/2019 23:59:59[, duration: 2678397 second(s)
-DTR3: [01/01/2019 00:00:00, 31/01/2019 23:59:59[, duration: 2678398 second(s)
-DTR4: ]01/01/2019 00:00:00, 31/01/2019 23:59:59], duration: 2678398 second(s)
-DTR5: [01/01/2019 00:00:00, [, duration: Infinite
-DTR6: ]01/01/2019 00:00:00, [, duration: Infinite
-DTR7: ] , 31/01/2019 23:59:59], duration: Infinite
-DTR8: ] , 31/01/2019 23:59:59[, duration: Infinite
-DTR9: [01/01/2018 00:00:00, 31/12/2018 23:59:59], duration: 31535999 second(s)
-DTR10: [01/02/2018 00:00:00, 28/02/2019 23:59:59], duration: 33955199 second(s)
-DTR11: ] , 31/12/2018 23:59:59], duration: Infinite
-DTR12: [01/02/2018 00:00:00, [, duration: Infinite
+        DTR1: [01/01/2019 00:00:00, 31/01/2019 23:59:59], duration: 2678399 second(s)
+        DTR2: ]01/01/2019 00:00:00, 31/01/2019 23:59:59[, duration: 2678397 second(s)
+        DTR3: [01/01/2019 00:00:00, 31/01/2019 23:59:59[, duration: 2678398 second(s)
+        DTR4: ]01/01/2019 00:00:00, 31/01/2019 23:59:59], duration: 2678398 second(s)
+        DTR5: [01/01/2019 00:00:00, [, duration: Infinite
+        DTR6: ]01/01/2019 00:00:00, [, duration: Infinite
+        DTR7: ] , 31/01/2019 23:59:59], duration: Infinite
+        DTR8: ] , 31/01/2019 23:59:59[, duration: Infinite
+        DTR9: [01/01/2018 00:00:00, 31/12/2018 23:59:59], duration: 31535999 second(s)
+        DTR10: [01/02/2018 00:00:00, 28/02/2019 23:59:59], duration: 33955199 second(s)
+        DTR11: ] , 31/12/2018 23:59:59], duration: Infinite
+        DTR12: [01/02/2018 00:00:00, [, duration: Infinite
 
-First date in the range DTR1 is 01/01/2019 00:00:00, the last is 31/01/2019 23:59:59
-First date in the range DTR2 is 01/01/2019 00:00:01, the last is 31/01/2019 23:59:58
-First date in the range DTR3 is 01/01/2019 00:00:00, the last is 31/01/2019 23:59:58
-First date in the range DTR4 is 01/01/2019 00:00:01, the last is 31/01/2019 23:59:59
-First date in the range DTR5 is 01/01/2019 00:00:00, the last is 31/12/9999 23:59:59
-First date in the range DTR6 is 01/01/2019 00:00:01, the last is 31/12/9999 23:59:59
-First date in the range DTR7 is 01/01/0001 00:00:00, the last is 31/01/2019 23:59:59
-First date in the range DTR8 is 01/01/0001 00:00:00, the last is 31/01/2019 23:59:58
-First date in the range DTR9 is 01/01/2018 00:00:00, the last is 31/12/2018 23:59:59
-First date in the range DTR10 is 01/02/2018 00:00:00, the last is 28/02/2019 23:59:59
-First date in the range DTR11 is 01/01/0001 00:00:00, the last is 31/12/2018 23:59:59
-First date in the range DTR12 is 01/02/2018 00:00:00, the last is 31/12/9999 23:59:59
+First date in the range DTR1 is 01/01/2019 00:00:00, the last is 31/01/2019 23:59:59.
+First date in the range DTR2 is 01/01/2019 00:00:01, the last is 31/01/2019 23:59:58.
+First date in the range DTR3 is 01/01/2019 00:00:00, the last is 31/01/2019 23:59:58.
+First date in the range DTR4 is 01/01/2019 00:00:01, the last is 31/01/2019 23:59:59.
+First date in the range DTR5 is 01/01/2019 00:00:00, the last is 31/12/9999 23:59:59.
+First date in the range DTR6 is 01/01/2019 00:00:01, the last is 31/12/9999 23:59:59.
+First date in the range DTR7 is 01/01/0001 00:00:00, the last is 31/01/2019 23:59:59.
+First date in the range DTR8 is 01/01/0001 00:00:00, the last is 31/01/2019 23:59:58.
+First date in the range DTR9 is 01/01/2018 00:00:00, the last is 31/12/2018 23:59:59.
+First date in the range DTR10 is 01/02/2018 00:00:00, the last is 28/02/2019 23:59:59.
+First date in the range DTR11 is 01/01/0001 00:00:00, the last is 31/12/2018 23:59:59.
+First date in the range DTR12 is 01/02/2018 00:00:00, the last is 31/12/9999 23:59:59.
 
 public bool IsInRange(DateTime date):
 31/12/2018 23:59:59:
