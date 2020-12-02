@@ -10,10 +10,11 @@ namespace System
         /// </summary>
         /// <param name="start">A <see cref="DateTime"/> representing the start of the range.</param>
         /// <param name="end">A <see cref="DateTime"/> representing the end of the range.</param>
+        /// <param name="withTime"><c>true</c> if you want take into account the time, <c>false</c> by default.</param>
         /// <remarks>By default the start and the end dates are included.</remarks>
         /// <exception cref="ArgumentException">If the <paramref name="start"/> is bigger than <paramref name="end"/>.</exception>
-        public DateTimeRange(DateTime start, DateTime end)
-            : this(start, end, Interval.AllInclude)
+        public DateTimeRange(DateTime start, DateTime end, Boolean withTime = false)
+            : this(start, end, Interval.AllInclude, withTime)
         { }
 
         /// <summary>
@@ -21,10 +22,11 @@ namespace System
         /// </summary>
         /// <param name="start">A <see cref="DateTime"/> representing the start of the range.</param>
         /// <param name="end">A <see cref="Nullable{DateTime}"/> representing the end of the range.</param>
+        /// <param name="withTime"><c>true</c> if you want take into account the time, <c>false</c> by default.</param>
         /// <remarks>If the <paramref name="end"/> is null, the <see cref="System.Interval"/> is set to 'StartIncludeEndExclude', otherwise is set to 'AllIncude'.</remarks>
         /// <exception cref="ArgumentException">If the <paramref name="start"/> is bigger than <paramref name="end"/>.</exception>
-        public DateTimeRange(DateTime start, DateTime? end)
-            : this(start, end, end.HasValue ? Interval.AllInclude : Interval.StartIncludeEndExclude)
+        public DateTimeRange(DateTime start, DateTime? end, Boolean withTime = false)
+            : this(start, end, end.HasValue ? Interval.AllInclude : Interval.StartIncludeEndExclude, withTime)
         { }
 
         /// <summary>
@@ -32,10 +34,11 @@ namespace System
         /// </summary>
         /// <param name="start">A <see cref="DateTime"/> representing the start of the range.</param>
         /// <param name="end">A <see cref="Nullable{DateTime}"/> representing the end of the range.</param>
+        /// <param name="withTime"><c>true</c> if you want take into account the time, <c>false</c> by default.</param>
         /// <remarks>If the <paramref name="start"/> is null, the <see cref="System.Interval"/> is set to 'StartExcludeEndInclude', otherwise is set to 'AllInclude'.</remarks>
         /// <exception cref="ArgumentException">If the <paramref name="start"/> is bigger than <paramref name="end"/>.</exception>
-        public DateTimeRange(DateTime? start, DateTime end)
-            : this(start, end, start.HasValue ? Interval.AllInclude : Interval.StartExcludeEndInclude)
+        public DateTimeRange(DateTime? start, DateTime end, Boolean withTime = false)
+            : this(start, end, start.HasValue ? Interval.AllInclude : Interval.StartExcludeEndInclude, withTime)
         { }
 
         /// <summary>
@@ -44,11 +47,12 @@ namespace System
         /// <param name="start">A <see cref="DateTime"/> representing the start of the range.</param>
         /// <param name="end">A <see cref="Nullable{DateTime}"/> representing the end of the range.</param>
         /// <param name="interval">The <see cref="System.Interval"/> (default: 'Close').</param>
+        /// <param name="withTime"><c>true</c> if you want take into account the time, <c>false</c> by default.</param>
         /// <exception cref="ArgumentOutOfRangeException">If no value.</exception>
         /// <exception cref="ArgumentException">If <paramref name="start"/> has no value and the interval is different of 'Open' or 'LeftOpenRightClose'.</exception>
         /// <exception cref="ArgumentException">If <paramref name="end"/> has no value and the interval is different of 'Open' or 'LeftCloseRightOpen'.</exception>
         /// <exception cref="ArgumentException">If the <paramref name="start"/> is bigger than <paramref name="end"/>.</exception>
-        public DateTimeRange(DateTime? start, DateTime? end, Interval interval = Interval.AllInclude)
+        public DateTimeRange(DateTime? start, DateTime? end, Interval interval = Interval.AllInclude, Boolean withTime = false)
         {
             if (!start.HasValue && !end.HasValue)
             {
@@ -70,9 +74,10 @@ namespace System
                 throw new ArgumentException("Start is bigger than End.", "start");
             }
 
-            Start = start;
-            End = end;
-            Interval = interval;
+            this.Start = start;
+            this.End = end;
+            this.Interval = interval;
+            this.WithTime = withTime;
         }
 
         /// <summary>
@@ -108,7 +113,7 @@ namespace System
             {
                 return this.Interval switch
                 {
-                    var x when x == Interval.AllExclude || x == Interval.StartExcludeEndInclude => this.Start.HasValue ? this.Start.Value.AddSeconds(1) : DateTime.MinValue,
+                    var x when x == Interval.AllExclude || x == Interval.StartExcludeEndInclude => this.Start.HasValue ? (this.WithTime ? this.Start.Value.AddSeconds(1) : this.Start.Value.AddDays(1)) : DateTime.MinValue,
                     _ => this.Start.Value
                 };
             }
@@ -117,7 +122,7 @@ namespace System
         /// <summary>
         /// The <see cref="IntervalType"/> of the <see cref="DateTimeRange"/>.
         /// </summary>
-        public Interval Interval { get; set; }
+        public Interval Interval { get; private set; }
 
         /// <summary>
         /// Gets the last date include in the current <see cref="DateTimeRange"/>.
@@ -129,7 +134,7 @@ namespace System
             {
                 return this.Interval switch
                 {
-                    var x when x == Interval.AllExclude || x == Interval.StartIncludeEndExclude => this.End.HasValue ? this.End.Value.AddSeconds(-1) : DateTime.MaxValue,
+                    var x when x == Interval.AllExclude || x == Interval.StartIncludeEndExclude => this.End.HasValue ? (this.WithTime ? this.End.Value.AddSeconds(-1) : this.End.Value.AddDays(-1)) : DateTime.MaxValue,
                     _ => this.End.Value
                 };
             }
@@ -139,6 +144,13 @@ namespace System
         /// The start of the <see cref="DateTimeRange"/>.
         /// </summary>
         public DateTime? Start { get; private set; }
+
+        /// <summary>
+        /// Gets a value indicating if the time takes into account.
+        /// </summary>
+        /// <value><c>true</c> if the time takes into account; otherwise, <c>false</c>.
+        /// </value>
+        public Boolean WithTime { get; private set; }
 
         /// <summary>
         /// Indicates whether this instance and a specified object are equal.
@@ -171,7 +183,7 @@ namespace System
         /// <exception cref="ArgumentOutOfRangeException">The date and time are outside the range of dates supported by the calendar used by the current culture.</exception>
         public override string ToString()
         {
-            string result = String.Format("{0}, {1}", this.Start.HasValue ? this.Start.ToString() : " ", this.End.HasValue ? this.End.ToString() : String.Empty);
+            string result = String.Format("{0}, {1}", this.Start.HasValue ? (this.WithTime ? this.Start.ToString() : this.Start.Value.ToShortDateString()) : " ", this.End.HasValue ? (this.WithTime ? this.End.ToString() : this.End.Value.ToShortDateString()) : String.Empty);
             return Interval switch
             {
                 Interval.AllExclude => "]" + result + "[",
